@@ -1,0 +1,79 @@
+@font-face {
+  font-family: "Terminal";
+  src: url(CourierPrime-Regular.ttf);
+}
+
+body {
+  width: 100vw;
+  height: 100vh;
+  margin: 0px;
+  padding: 0px;
+  background-color: cornsilk;
+}
+
+#console {
+  background-color: black;
+  width: calc(100% - 10px);
+  height: calc(100% - 10px);
+  padding: 5px;
+
+  display: flex;
+  flex-direction: column;
+
+  font-size: 30px;
+  font-family: 'Terminal';
+  color: white;
+
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+#console:hover {
+  cursor: text;
+}
+
+#lines-holder {
+  width: 100%;
+  /* flex-grow: 1; */
+
+  background-color: black;
+
+  font-size: inherit;
+  font-family: inherit;
+  color: inherit;
+}
+
+#input-line {
+  width: 100%;
+  display: flex;
+
+  font-size: inherit;
+  font-family: inherit;
+  color: inherit;
+}
+
+#console-input {
+  background-color: black;
+  flex-grow: 1;
+
+  font-size: inherit;
+  font-family: inherit;
+  color: inherit;
+
+  border: none;
+  padding: 0px;
+}
+
+#console-input:focus {
+  outline: none;
+}
+
+#input-indicator {
+  white-space: pre-wrap;
+}
+
+.lines {
+  font-size: inherit;
+  font-family: inherit;
+  color: inherit;
+}
