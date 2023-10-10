@@ -27,8 +27,21 @@ $("#console-input").addEventListener("keydown", e => {
     cmdCallbacks.forEach(callback => { callback(line); })
     $("#console-input").value = "";
   }
-  else if (e.key == "ArrowUp") $("#console-input").value = getLastInput();
-  else if (e.key == "ArrowDown") $("#console-input").value = getNextInput();
+  else if (e.key == "ArrowUp") {
+    e.preventDefault();
+    const cmd = getLastInput()
+    $("#console-input").value = cmd;
+    console.log(cmd.length)
+    $("#console-input").setSelectionRange(cmd.length, cmd.length);
+    // $("#console-input").focus();
+  }
+  else if (e.key == "ArrowDown") {
+    e.preventDefault();
+    const cmd = getNextInput();
+    $("#console-input").value = cmd;
+    $("#console-input").setSelectionRange(cmd.length, cmd.length);
+    // $("#console-input").focus();
+  }
 });
 
 function getLastInput() {

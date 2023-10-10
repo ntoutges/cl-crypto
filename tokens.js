@@ -24,6 +24,22 @@ export const tokensData = {
     },
     params: {}
   },
+  "list": {
+    flags: {
+      "r": "regex",
+      "i": "case insensitive"
+    },
+    params: {
+      "text": "Input string to reference when looking for commands"
+    },
+    validate: (token) => {
+      if (token.flags.r) {
+        try { this.params.text = new RegExp(this.params.text); }
+        catch (_) { return "Invalid RegEx string"; }
+      }
+      return "";
+    }
+  },
 
   "set": {
     flags: {
@@ -213,6 +229,9 @@ export function run(token) {
       consoleClearCallback(token.flags.has("h"));
       if (token.flags.has("v")) vars.clearAll();
       break;
+    case "list":
+      runList(token);
+      break;
     case "set":
       runSetVar(token);
       break;
@@ -261,6 +280,26 @@ function printHelp(cmd) {
   consolePrintCallback("parameters: " + (params.length ? params : "No flags."));
   for (const param of Object.keys(data.params)) {
     consolePrintCallback(` %c(color:orange)(>) %c(color:unset)${param}: ${data.params[param]}`);
+  }
+}
+
+function runList(token) {
+  let pattern = token.params.text;
+  const ignoreCase = token.flags.has("i");
+
+  if (token.flags.has("r")) { // regex
+    if (ignoreCase) pattern = new RegExp(pattern, "i"); // add case insensitive flag
+    for (const name in tokensData) {
+      const match = name.match(pattern)
+      if (match) consolePrintCallback(` - ${name.replace(match[0], `%c(color:#d17b7b)${match[0]}%c(color:unset)`)}`);
+    }
+  }
+  else { // not regex
+    if (ignoreCase) pattern = pattern.toLowerCase();
+    for (let name in tokensData) {
+      if (ignoreCase) name = name.toLowerCase();
+      if (name.includes(pattern)) consolePrintCallback(` - ${name.replaceAll(pattern, `%c(color:#d17b7b)${pattern}%c(color:unset)`)}`);
+    }
   }
 }
 
