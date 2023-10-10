@@ -7,8 +7,8 @@ export function generatePublicKey(p,r,b) {
 }
 
 export function encrypt(p,r,B,m) {
-  // const a = BigInt(1 + Math.floor(Math.random() * parseInt(p)-1));
-  const a = 223n // for testing
+  const a = BigInt(1 + Math.floor(Math.random() * parseInt(p)-1));
+  // const a = 223n // for testing
   
   const A = modExp(r,a,p);
   const M = m*modExp(B,a,p) % p;
